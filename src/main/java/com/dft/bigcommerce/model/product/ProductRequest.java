@@ -24,15 +24,15 @@ public class ProductRequest {
     private String sku;
     private List<VariantRequest> variants = new ArrayList<>();
     private String description;
-    private Integer weight;
-    private Integer price;
+    private Double weight;
+    private Double price;
 
-    private Integer width;
-    private Integer depth;
-    private Integer height;
-    private Integer costPrice;
-    private Integer retailPrice;
-    private Integer salePrice;
+    private Double width;
+    private Double depth;
+    private Double height;
+    private Double costPrice;
+    private Double retailPrice;
+    private Double salePrice;
     private Integer mapPrice;
     private Integer taxClassId;
     private String productTaxCode;
@@ -40,7 +40,7 @@ public class ProductRequest {
     private Integer inventoryLevel;
     private Integer inventoryWarningLevel;
     private String inventoryTracking;
-    private Integer fixedCostShippingPrice;
+    private Double fixedCostShippingPrice;
     private Boolean isFreeShipping;
     private Boolean isVisible;
     private Boolean isFeatured;
