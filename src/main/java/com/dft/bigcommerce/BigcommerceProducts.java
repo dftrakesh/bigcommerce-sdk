@@ -44,4 +44,11 @@ public class BigcommerceProducts extends BigcommerceSDK {
         ProductWrapper productWrapper = getRequestWrapped(request, handler);
         return productWrapper.getData();
     }
+
+    @SneakyThrows
+    public void deleteProduct(Integer id) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
+        HttpRequest request = delete(uriBuilder);
+        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
+    }
 }

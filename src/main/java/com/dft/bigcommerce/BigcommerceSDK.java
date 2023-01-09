@@ -14,6 +14,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +33,11 @@ public class BigcommerceSDK {
     public BigcommerceSDK(String storeHash, String accessToken) {
         this.accessToken = accessToken;
         this.storeHash = storeHash;
-        client = HttpClient.newHttpClient();
+        client = HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.ALWAYS)
+            .version(HttpClient.Version.HTTP_1_1)
+            .connectTimeout(Duration.ofSeconds(20))
+            .build();
     }
 
     @SneakyThrows
@@ -81,6 +86,17 @@ public class BigcommerceSDK {
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+    }
+
+    @SneakyThrows
+    protected HttpRequest delete(URIBuilder uriBuilder) {
+
+        return HttpRequest.newBuilder(uriBuilder.build())
+            .header("X-Auth-Token", this.accessToken)
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.ACCEPT, "application/json")
+            .DELETE()
             .build();
     }
 
