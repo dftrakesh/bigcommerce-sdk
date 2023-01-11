@@ -5,7 +5,7 @@
 
     <groupId>io.github.dftrakesh</groupId>
     <artifactId>bigcommerce-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>bigcommerce-sdk</name>

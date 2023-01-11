@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -15,5 +14,8 @@ import java.util.List;
 public class VariantRequest {
 
     private String sku;
+    private Integer inventoryLevel;
+    private Integer inventoryWarningLevel;
+    private String imageUrl;
     private List<OptionalValueRequest> optionValues;
 }
