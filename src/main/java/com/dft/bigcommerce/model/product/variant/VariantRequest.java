@@ -17,5 +17,7 @@ public class VariantRequest {
     private Integer inventoryLevel;
     private Integer inventoryWarningLevel;
     private String imageUrl;
+    private Double price;
+    private Double weight;
     private List<OptionalValueRequest> optionValues;
 }

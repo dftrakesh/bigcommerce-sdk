@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,6 @@ public class ProductRequest {
     private String description;
     private Double weight;
     private Double price;
-
     private Double width;
     private Double depth;
     private Double height;
@@ -80,5 +78,4 @@ public class ProductRequest {
     private Integer totalSold;
     private List<Image> images = new ArrayList<>();
     private List<Video> videos = new ArrayList<>();
-
 }
