@@ -7,7 +7,6 @@ import com.dft.bigcommerce.model.product.ProductWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;
-
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
@@ -34,15 +33,14 @@ public class BigcommerceProducts extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public Product createProduct(ProductRequest productRequest) {
+    public ProductWrapper createProduct(ProductRequest productRequest) {
         URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products");
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         System.out.println("jsonBody: " + jsonBody);
         HttpRequest request = post(uriBuilder, jsonBody);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
-        ProductWrapper productWrapper = getRequestWrapped(request, handler);
-        return productWrapper.getData();
+        return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
