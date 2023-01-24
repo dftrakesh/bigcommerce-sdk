@@ -90,6 +90,17 @@ public class BigcommerceSDK {
     }
 
     @SneakyThrows
+    protected HttpRequest put(URIBuilder uriBuilder, final String jsonBody) {
+
+        return HttpRequest.newBuilder(uriBuilder.build())
+            .header("X-Auth-Token", this.accessToken)
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.ACCEPT, "application/json")
+            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build();
+    }
+
+    @SneakyThrows
     protected HttpRequest delete(URIBuilder uriBuilder) {
 
         return HttpRequest.newBuilder(uriBuilder.build())

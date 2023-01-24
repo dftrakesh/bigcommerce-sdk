@@ -18,6 +18,7 @@ public class Brand {
 
     private Integer id;
     private String name;
+    private String pageTitle;
     private List<String> metaKeywords = new ArrayList<>();
     private String metaDescription;
     private String searchKeywords;
