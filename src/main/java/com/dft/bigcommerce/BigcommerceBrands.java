@@ -29,4 +29,25 @@ public class BigcommerceBrands extends BigcommerceSDK {
         BrandWrapper brandWrapper = getRequestWrapped(request, handler);
         return brandWrapper.getData();
     }
+
+    @SneakyThrows
+    public Brand getBrand(Integer brandId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/brands/" + brandId);
+
+        HttpRequest request = get(uriBuilder);
+        HttpResponse.BodyHandler<BrandWrapper> handler = new JsonBodyHandler<>(BrandWrapper.class);
+        BrandWrapper brandWrapper = getRequestWrapped(request, handler);
+        return brandWrapper.getData();
+    }
+
+    @SneakyThrows
+    public Brand updateBrand(Integer brandId, BrandRequest brandRequest) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/brands/" + brandId);
+
+        String jsonBody = objectMapper.writeValueAsString(brandRequest);
+        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpResponse.BodyHandler<BrandWrapper> handler = new JsonBodyHandler<>(BrandWrapper.class);
+        BrandWrapper brandWrapper = getRequestWrapped(request, handler);
+        return brandWrapper.getData();
+    }
 }
