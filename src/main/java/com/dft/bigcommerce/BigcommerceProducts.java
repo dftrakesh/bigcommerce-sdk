@@ -37,7 +37,6 @@ public class BigcommerceProducts extends BigcommerceSDK {
         URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products");
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
-        System.out.println("jsonBody: " + jsonBody);
         HttpRequest request = post(uriBuilder, jsonBody);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
         return getRequestWrapped(request, handler);
