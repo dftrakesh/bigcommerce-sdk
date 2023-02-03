@@ -110,10 +110,7 @@ public class BigcommerceSDK {
 
         return client
             .sendAsync(request, handler)
-            .thenComposeAsync(response -> {
-                System.out.println(response.body());
-                return tryResend(client, request, handler, response, 1);
-            })
+            .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
             .get()
             .body();
     }
