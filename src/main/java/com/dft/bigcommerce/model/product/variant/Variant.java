@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.catalog.variant;
+package com.dft.bigcommerce.model.product.variant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
