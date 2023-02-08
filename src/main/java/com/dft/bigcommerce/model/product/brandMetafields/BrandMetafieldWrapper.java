@@ -11,7 +11,6 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BrandMetafieldWrapper {
 
-    public BrandMetafield data;
-    public Meta meta;
-
+    private BrandMetafield data;
+    private Meta meta;
 }

@@ -14,15 +14,14 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BrandMetafield {
 
-    public Integer id;
-    public String key;
-    public String value;
-    public String namespace;
-    public String permissionSet;
-    public String resourceType;
-    public Integer resourceId;
-    public String description;
-    public String dateCreated;
-    public String dateModified;
-
+    private Integer id;
+    private String key;
+    private String value;
+    private String namespace;
+    private String permissionSet;
+    private String resourceType;
+    private Integer resourceId;
+    private String description;
+    private String dateCreated;
+    private String dateModified;
 }

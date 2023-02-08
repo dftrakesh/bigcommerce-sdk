@@ -13,7 +13,6 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BrandMetafieldsWrapper {
 
-    public List<BrandMetafield> data;
-    public Meta meta;
-
+    private List<BrandMetafield> data;
+    private Meta meta;
 }
