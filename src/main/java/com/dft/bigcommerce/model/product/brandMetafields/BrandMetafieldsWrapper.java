@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BrandMetafieldsWrapper {
 
     private List<BrandMetafield> data;

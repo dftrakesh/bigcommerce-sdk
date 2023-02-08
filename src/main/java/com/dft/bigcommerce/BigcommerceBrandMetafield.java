@@ -39,8 +39,8 @@ public class BigcommerceBrandMetafield extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public BrandMetafieldWrapper getBrandMetafieldById(Integer brandId, Integer brandMetafieldId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + brandMetafieldId);
+    public BrandMetafieldWrapper getBrandMetafieldById(Integer brandId, Integer metafieldId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + metafieldId);
 
         HttpRequest request = get(uriBuilder);
         HttpResponse.BodyHandler<BrandMetafieldWrapper> handler = new JsonBodyHandler<>(BrandMetafieldWrapper.class);
@@ -48,8 +48,8 @@ public class BigcommerceBrandMetafield extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public BrandMetafieldWrapper updateBrandMetafield(Integer brandId, Integer brandMetafieldId, BrandMetafieldRequest brandMetafieldRequest) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + brandMetafieldId);
+    public BrandMetafieldWrapper updateBrandMetafield(Integer brandId, Integer metafieldId, BrandMetafieldRequest brandMetafieldRequest) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + metafieldId);
 
         String jsonBody = objectMapper.writeValueAsString(brandMetafieldRequest);
         HttpRequest request = put(uriBuilder, jsonBody);
@@ -58,8 +58,8 @@ public class BigcommerceBrandMetafield extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public void deleteBrandMetafield(Integer brandId, Integer brandMetafieldId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + brandMetafieldId);
+    public void deleteBrandMetafield(Integer brandId, Integer metafieldId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands/" + brandId + "/metafields/" + metafieldId);
 
         HttpRequest request = delete(uriBuilder);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());

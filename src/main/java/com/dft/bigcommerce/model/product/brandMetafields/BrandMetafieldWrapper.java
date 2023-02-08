@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BrandMetafieldWrapper {
 
     private BrandMetafield data;
