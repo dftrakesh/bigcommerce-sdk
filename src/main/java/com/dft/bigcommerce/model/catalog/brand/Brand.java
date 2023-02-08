@@ -1,6 +1,6 @@
-package com.dft.bigcommerce.model.product.brand;
+package com.dft.bigcommerce.model.catalog.brand;
 
-import com.dft.bigcommerce.model.product.CustomUrl;
+import com.dft.bigcommerce.model.catalog.CustomUrl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

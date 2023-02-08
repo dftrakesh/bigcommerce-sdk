@@ -1,9 +1,9 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
-import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldRequest;
-import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldWrapper;
-import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldsWrapper;
+import com.dft.bigcommerce.model.catalog.brandMetafields.BrandMetafieldRequest;
+import com.dft.bigcommerce.model.catalog.brandMetafields.BrandMetafieldWrapper;
+import com.dft.bigcommerce.model.catalog.brandMetafields.BrandMetafieldsWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;

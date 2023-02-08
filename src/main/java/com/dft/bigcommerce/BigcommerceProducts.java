@@ -1,9 +1,9 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
-import com.dft.bigcommerce.model.product.Product;
-import com.dft.bigcommerce.model.product.ProductRequest;
-import com.dft.bigcommerce.model.product.ProductWrapper;
+import com.dft.bigcommerce.model.catalog.Product;
+import com.dft.bigcommerce.model.catalog.ProductRequest;
+import com.dft.bigcommerce.model.catalog.ProductWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;

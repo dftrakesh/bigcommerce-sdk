@@ -1,8 +1,8 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
-import com.dft.bigcommerce.model.product.categorybatch.Category;
-import com.dft.bigcommerce.model.product.categorybatch.CategoryWrapper;
+import com.dft.bigcommerce.model.catalog.categorybatch.Category;
+import com.dft.bigcommerce.model.catalog.categorybatch.CategoryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;
