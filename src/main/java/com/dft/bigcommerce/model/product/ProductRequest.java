@@ -34,6 +34,7 @@ public class ProductRequest {
     private Integer mapPrice;
     private Integer taxClassId;
     private String productTaxCode;
+    private List<Integer> categories;
     private Integer brandId;
     private Integer inventoryLevel;
     private Integer inventoryWarningLevel;
