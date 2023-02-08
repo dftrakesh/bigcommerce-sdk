@@ -1,5 +1,6 @@
-package com.dft.bigcommerce.model.product.video;
+package com.dft.bigcommerce.model.catalog.category;
 
+import com.dft.bigcommerce.model.common.Meta;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -10,14 +11,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Video {
+public class CategoryWrapper {
 
-    public String title;
-    public String description;
-    public Integer sortOrder;
-    public String type;
-    public String videoId;
-    public Integer id;
-    public Integer productId;
-    public String length;
+    private Category data;
+    private Meta meta;
 }

@@ -1,27 +1,23 @@
-package com.dft.bigcommerce.model.product.image;
+package com.dft.bigcommerce.model.catalog.variant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Image {
+public class VariantRequest {
 
-    private String imageFile;
-    private Boolean isThumbnail;
-    private Integer sortOrder;
-    private String description;
+    private String sku;
+    private Integer inventoryLevel;
+    private Integer inventoryWarningLevel;
     private String imageUrl;
-    private Integer id;
-    private Integer productId;
-    private String urlZoom;
-    private String urlStandard;
-    private String urlThumbnail;
-    private String urlTiny;
-    private String dateModified;
+    private Double price;
+    private Double weight;
+    private List<OptionalValueRequest> optionValues;
 }

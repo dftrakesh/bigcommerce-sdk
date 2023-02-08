@@ -1,23 +1,23 @@
-package com.dft.bigcommerce.model.product.variant;
+package com.dft.bigcommerce.model.catalog.video;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class VariantRequest {
+public class Video {
 
-    private String sku;
-    private Integer inventoryLevel;
-    private Integer inventoryWarningLevel;
-    private String imageUrl;
-    private Double price;
-    private Double weight;
-    private List<OptionalValueRequest> optionValues;
+    public String title;
+    public String description;
+    public Integer sortOrder;
+    public String type;
+    public String videoId;
+    public Integer id;
+    public Integer productId;
+    public String length;
 }
