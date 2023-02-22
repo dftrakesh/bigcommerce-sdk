@@ -6,7 +6,6 @@ import com.dft.bigcommerce.model.product.variant.VariantWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;
-
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -34,5 +33,12 @@ public class BigcommerceProductsVariants extends BigcommerceSDK {
         HttpRequest request = put(uriBuilder, jsonBody);
         HttpResponse.BodyHandler<VariantWrapper> handler = new JsonBodyHandler<>(VariantWrapper.class);
         return getRequestWrapped(request, handler);
+    }
+
+    @SneakyThrows
+    public void deleteVariant(Integer productId, Integer variantId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/variants/" + variantId);
+        HttpRequest request = delete(uriBuilder);
+        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }
