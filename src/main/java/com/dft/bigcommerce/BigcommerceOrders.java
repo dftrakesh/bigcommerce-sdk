@@ -11,11 +11,11 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class BigcommerceOrdersV2 extends BigcommerceSDK {
+public class BigcommerceOrders extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceOrdersV2(String storeHash, String accessToken) {
+    public BigcommerceOrders(String storeHash, String accessToken) {
         super(storeHash, accessToken);
     }
 
@@ -54,7 +54,6 @@ public class BigcommerceOrdersV2 extends BigcommerceSDK {
         HttpResponse.BodyHandler<OrdersWrapper> handler = new JsonBodyHandler<>(OrdersWrapper.class);
         return getRequestWrapped(request, handler);
     }
-
 
     @SneakyThrows
     public OrderWrapper createOrder(OrderRequest orderRequest) {
