@@ -13,6 +13,8 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class VariantRequest {
 
+    private Integer id;
+    private Integer productId;
     private String sku;
     private Integer inventoryLevel;
     private Integer inventoryWarningLevel;
