@@ -39,13 +39,9 @@ public class BigcommerceSDK {
 
     @SneakyThrows
     private static byte[] buildMultipartData(String boundary, String crlf, byte[] imageData, File file) {
-        String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
-        String format = file.toString().substring(file.toString().lastIndexOf(".") + 1);
-        String fileNameWithFormat = fileName + "." + format;
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byteArrayOutputStream.write(("--" + boundary + crlf).getBytes());
-        byteArrayOutputStream.write(("Content-Disposition: form-data; name=\"image_file\"; filename=\"" + fileNameWithFormat + "\"" + crlf).getBytes());
+        byteArrayOutputStream.write(("Content-Disposition: form-data; name=\"image_file\"; filename=\"" + file.getName() + "\"" + crlf).getBytes());
         byteArrayOutputStream.write(("Content-Type: image/jpeg" + crlf + crlf).getBytes());
         byteArrayOutputStream.write(imageData);
         byteArrayOutputStream.write((crlf + "--" + boundary + crlf).getBytes());
