@@ -64,6 +64,13 @@ public class BigcommerceSDK {
             .setPath(path);
     }
 
+    protected URIBuilder baseUrlV2(URIBuilder uriBuilder, String path) {
+        return uriBuilder
+                .setScheme("https")
+                .setHost("api.bigcommerce.com/stores/" + this.storeHash + "/v2")
+                .setPath(path);
+    }
+
     @SneakyThrows
     protected HttpRequest get(URIBuilder uriBuilder) {
         return HttpRequest.newBuilder(uriBuilder.build())
