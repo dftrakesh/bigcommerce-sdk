@@ -43,6 +43,16 @@ public class BigcommerceProducts extends BigcommerceSDK {
     }
 
     @SneakyThrows
+    public ProductWrapper updateProduct(ProductRequest productRequest, Integer id) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
+
+        String jsonBody = objectMapper.writeValueAsString(productRequest);
+        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
+        return getRequestWrapped(request, handler);
+    }
+
+    @SneakyThrows
     public void deleteProduct(Integer id) {
         URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
         HttpRequest request = delete(uriBuilder);

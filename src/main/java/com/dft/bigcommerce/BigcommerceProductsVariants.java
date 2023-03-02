@@ -2,6 +2,7 @@ package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.variant.ProductVariantRequest;
+import com.dft.bigcommerce.model.product.variant.VariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -31,6 +32,16 @@ public class BigcommerceProductsVariants extends BigcommerceSDK {
 
         String jsonBody = objectMapper.writeValueAsString(variantRequest);
         HttpRequest request = put(uriBuilder, jsonBody);
+        HttpResponse.BodyHandler<VariantWrapper> handler = new JsonBodyHandler<>(VariantWrapper.class);
+        return getRequestWrapped(request, handler);
+    }
+
+    @SneakyThrows
+    public VariantWrapper createProductVariant(VariantRequest productRequest, Integer id) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id + "/variants");
+
+        String jsonBody = objectMapper.writeValueAsString(productRequest);
+        HttpRequest request = post(uriBuilder, jsonBody);
         HttpResponse.BodyHandler<VariantWrapper> handler = new JsonBodyHandler<>(VariantWrapper.class);
         return getRequestWrapped(request, handler);
     }
