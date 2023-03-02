@@ -1,5 +1,6 @@
 package com.dft.bigcommerce;
 
+import com.dft.bigcommerce.constantcodes.ConstantCode;
 import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.Product;
 import com.dft.bigcommerce.model.product.ProductsWrapper;
@@ -60,21 +61,22 @@ public class BigcommerceSDK {
     protected URIBuilder baseUrl(URIBuilder uriBuilder, String path) {
         return uriBuilder
             .setScheme("https")
-            .setHost("api.bigcommerce.com/stores/" + this.storeHash + "/v3")
+            .setHost(ConstantCode.BASE_ENDPOINT + this.storeHash + ConstantCode.VERSION_3)
             .setPath(path);
     }
 
     protected URIBuilder baseUrlV2(URIBuilder uriBuilder, String path) {
         return uriBuilder
                 .setScheme("https")
-                .setHost("api.bigcommerce.com/stores/" + this.storeHash + "/v2")
+                .setHost(ConstantCode.BASE_ENDPOINT + this.storeHash + ConstantCode.VERSION_2)
                 .setPath(path);
     }
 
     @SneakyThrows
     protected HttpRequest get(URIBuilder uriBuilder) {
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header("X-Auth-Token", this.accessToken)
+            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
+            .header(HttpHeaders.ACCEPT, "application/json")
             .GET()
             .build();
     }
@@ -83,7 +85,7 @@ public class BigcommerceSDK {
     protected HttpRequest post(URIBuilder uriBuilder, final String jsonBody) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header("X-Auth-Token", this.accessToken)
+            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -94,7 +96,7 @@ public class BigcommerceSDK {
     protected HttpRequest put(URIBuilder uriBuilder, final String jsonBody) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header("X-Auth-Token", this.accessToken)
+            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -105,7 +107,7 @@ public class BigcommerceSDK {
     protected HttpRequest delete(URIBuilder uriBuilder) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header("X-Auth-Token", this.accessToken)
+            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .DELETE()

@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Order {
 
@@ -76,7 +76,6 @@ public class Order {
     private ShippingAddresses shippingAddresses;
     private Coupons coupons;
     private Object externalId;
-    private ExternalMerchantId externalMerchantId;
     private String taxProviderId;
     private String customerLocale;
     private String externalOrderId;
