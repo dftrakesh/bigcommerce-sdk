@@ -7,12 +7,15 @@ import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class BigcommerceSDK {
@@ -31,6 +34,36 @@ public class BigcommerceSDK {
             .followRedirects(HttpClient.Redirect.ALWAYS)
             .version(HttpClient.Version.HTTP_1_1)
             .connectTimeout(Duration.ofSeconds(20))
+            .build();
+    }
+
+    @SneakyThrows
+    private static byte[] buildMultipartData(String boundary, String crlf, byte[] imageData, File file) {
+        String fileName = file.getName().substring(0, file.getName().lastIndexOf("."));
+        String format = file.toString().substring(file.toString().lastIndexOf(".") + 1);
+        String fileNameWithFormat = fileName + "." + format;
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byteArrayOutputStream.write(("--" + boundary + crlf).getBytes());
+        byteArrayOutputStream.write(("Content-Disposition: form-data; name=\"image_file\"; filename=\"" + fileNameWithFormat + "\"" + crlf).getBytes());
+        byteArrayOutputStream.write(("Content-Type: image/jpeg" + crlf + crlf).getBytes());
+        byteArrayOutputStream.write(imageData);
+        byteArrayOutputStream.write((crlf + "--" + boundary + crlf).getBytes());
+        byteArrayOutputStream.write(("Content-Disposition: form-data; name=\"data\"" + crlf + crlf).getBytes());
+        byteArrayOutputStream.write((crlf + "--" + boundary + "--" + crlf).getBytes());
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    @SneakyThrows
+    protected HttpRequest postMultipart(URIBuilder uriBuilder, final byte[] imageData, final File file) {
+        final String boundary = "---" + UUID.randomUUID();
+        final String crlf = "\r\n";
+        final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofByteArray(buildMultipartData(boundary, crlf, imageData, file));
+        return HttpRequest.newBuilder(uriBuilder.build())
+            .header("X-Auth-Token", this.accessToken)
+            .header(HttpHeaders.CONTENT_TYPE, "multipart/form-data; boundary=" + boundary)
+            .header(HttpHeaders.ACCEPT, "application/json")
+            .POST(body)
             .build();
     }
 
