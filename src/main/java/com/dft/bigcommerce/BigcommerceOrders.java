@@ -26,7 +26,6 @@ public class BigcommerceOrders extends BigcommerceSDK {
         URIBuilder uriBuilder = baseUrlV2(new URIBuilder(), ORDER_ENDPOINT.concat(ConstantCode.SLASH_CHARACTER)
                 .concat(orderId.toString()));
 
-        System.out.println("uriBuilder: " + uriBuilder);
         HttpRequest request = get(uriBuilder);
         HttpResponse.BodyHandler<OrderWrapper> handler = new JsonBodyHandler<>(OrderWrapper.class);
         return getRequestWrapped(request, handler);

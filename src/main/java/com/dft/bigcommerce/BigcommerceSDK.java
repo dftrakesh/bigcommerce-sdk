@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import static com.dft.bigcommerce.constantcodes.ConstantCode.AUTH_TOKEN;
+
 public class BigcommerceSDK {
 
     private final String accessToken;
@@ -75,7 +77,7 @@ public class BigcommerceSDK {
     @SneakyThrows
     protected HttpRequest get(URIBuilder uriBuilder) {
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.ACCEPT, "application/json")
             .GET()
             .build();
@@ -85,7 +87,7 @@ public class BigcommerceSDK {
     protected HttpRequest post(URIBuilder uriBuilder, final String jsonBody) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -96,7 +98,7 @@ public class BigcommerceSDK {
     protected HttpRequest put(URIBuilder uriBuilder, final String jsonBody) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -107,7 +109,7 @@ public class BigcommerceSDK {
     protected HttpRequest delete(URIBuilder uriBuilder) {
 
         return HttpRequest.newBuilder(uriBuilder.build())
-            .header(ConstantCode.AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.accessToken)
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
             .header(HttpHeaders.ACCEPT, "application/json")
             .DELETE()
