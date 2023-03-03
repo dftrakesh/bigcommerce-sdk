@@ -1,6 +1,8 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.product.variantimage.VariantImageRequest;
+import com.dft.bigcommerce.model.product.variantimage.VariantImageWrapper;
 import com.dft.bigcommerce.model.product.variant.ProductVariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantWrapper;
@@ -51,5 +53,15 @@ public class BigcommerceProductsVariants extends BigcommerceSDK {
         URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/variants/" + variantId);
         HttpRequest request = delete(uriBuilder);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    @SneakyThrows
+    public VariantImageWrapper createVariantImage(VariantImageRequest variantImageRequest, Integer productId, Integer variantId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/variants/" + variantId + "/image");
+
+        String jsonBody = objectMapper.writeValueAsString(variantImageRequest);
+        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpResponse.BodyHandler<VariantImageWrapper> handler = new JsonBodyHandler<>(VariantImageWrapper.class);
+        return getRequestWrapped(request, handler);
     }
 }
