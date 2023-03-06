@@ -18,5 +18,5 @@ public class VariantWrapper {
     private Integer status;
     private String title;
     private String type;
-    private String errors;
+    private Object errors;
 }
