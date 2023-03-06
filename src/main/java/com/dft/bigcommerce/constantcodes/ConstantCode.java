@@ -7,4 +7,5 @@ public interface ConstantCode {
     String BASE_ENDPOINT = "api.bigcommerce.com/stores/";
     String VERSION_3 = "/v3";
     String VERSION_2 = "/v2";
+    String PRODUCTS_ENDPOINT = "/products";
 }
