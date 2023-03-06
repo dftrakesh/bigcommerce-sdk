@@ -19,12 +19,11 @@ public class OrderTaxes {
     private Integer taxRateId;
     private Integer taxClassId;
     private String name;
-
-    @JsonProperty("class")
-    private String taxClass;
-
     private String rate;
     private Integer priority;
     private String priorityAmount;
     private String lineAmount;
+
+    @JsonProperty("class")
+    private String taxClass;
 }

@@ -70,5 +70,4 @@ public class OrderProductWrapper {
     private Integer giftCertificateId;
     private List<AppliedDiscount> appliedDiscounts;
     private List<ProductOption> productOptions;
-    private List<Object> configurableFields;
 }
