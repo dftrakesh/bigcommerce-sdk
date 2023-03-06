@@ -9,11 +9,11 @@ import org.apache.http.client.utils.URIBuilder;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class BigcommerceOption extends BigcommerceSDK {
+public class BigcommerceOptionValue extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceOption(String storeHash, String accessToken) {
+    public BigcommerceOptionValue(String storeHash, String accessToken) {
         super(storeHash, accessToken);
     }
 
@@ -25,5 +25,12 @@ public class BigcommerceOption extends BigcommerceSDK {
         HttpRequest request = post(uriBuilder, jsonBody);
         HttpResponse.BodyHandler<VariantOptionValueWrapper> handler = new JsonBodyHandler<>(VariantOptionValueWrapper.class);
         return getRequestWrapped(request, handler);
+    }
+
+    @SneakyThrows
+    public void deleteVariantOptionValue(Integer productId, Integer optionId, Integer valueId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId +"/options/" + optionId + "/values/"+ valueId );
+        HttpRequest request = delete(uriBuilder);
+        getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }
