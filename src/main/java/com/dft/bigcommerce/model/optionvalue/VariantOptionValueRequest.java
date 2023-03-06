@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.option;
+package com.dft.bigcommerce.model.optionvalue;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

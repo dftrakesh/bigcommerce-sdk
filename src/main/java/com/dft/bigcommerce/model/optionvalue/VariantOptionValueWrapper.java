@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.option;
+package com.dft.bigcommerce.model.optionvalue;
 
 import com.dft.bigcommerce.model.common.Meta;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -12,7 +12,7 @@ import lombok.Data;
 public class VariantOptionValueWrapper {
 
     private VariantOptionValue data;
-    private String status;
+    private Integer status;
     private String title;
     private String type;
     private Meta meta;
