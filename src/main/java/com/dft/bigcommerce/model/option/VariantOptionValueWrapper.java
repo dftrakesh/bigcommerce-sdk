@@ -12,7 +12,7 @@ import lombok.Data;
 public class VariantOptionValueWrapper {
 
     private VariantOptionValue data;
-    private String status;
+    private Integer status;
     private String title;
     private String type;
     private Meta meta;

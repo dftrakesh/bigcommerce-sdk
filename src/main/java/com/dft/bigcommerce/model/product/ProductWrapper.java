@@ -11,7 +11,7 @@ import lombok.Data;
 public class ProductWrapper {
 
     private Product data;
-    private String status;
+    private Integer status;
     private String title;
     private String type;
     private String errors;

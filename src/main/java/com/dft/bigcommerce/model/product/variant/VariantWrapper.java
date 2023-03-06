@@ -15,7 +15,7 @@ public class VariantWrapper {
 
     private Variant data;
     private Meta meta;
-    private String status;
+    private Integer status;
     private String title;
     private String type;
     private String errors;
