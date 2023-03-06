@@ -8,4 +8,5 @@ public interface ConstantCode {
     String VERSION_3 = "/v3";
     String VERSION_2 = "/v2";
     String PRODUCTS_ENDPOINT = "/products";
+    String ORDERS_ENDPOINT = "/orders";
 }

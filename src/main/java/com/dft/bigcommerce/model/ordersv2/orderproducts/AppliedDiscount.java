@@ -12,6 +12,6 @@ public class AppliedDiscount {
     private String id;
     private String amount;
     private String name;
-    private Object code;
+    private String code;
     private String target;
 }
