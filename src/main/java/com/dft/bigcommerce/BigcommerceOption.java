@@ -1,8 +1,8 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
-import com.dft.bigcommerce.model.option.VariantOptionValueRequest;
-import com.dft.bigcommerce.model.option.VariantOptionValueWrapper;
+import com.dft.bigcommerce.model.option.OptionRequest;
+import com.dft.bigcommerce.model.option.OptionWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.http.client.utils.URIBuilder;
@@ -18,12 +18,12 @@ public class BigcommerceOption extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public VariantOptionValueWrapper createVariantOptionValue(VariantOptionValueRequest variantOptionValueRequest, Integer productId, Integer optionId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId +"/options/" + optionId + "/values" );
+    public OptionWrapper updateOption(OptionRequest optionRequest, Integer productId, Integer optionId) {
+        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/options/" + optionId);
 
-        String jsonBody = objectMapper.writeValueAsString(variantOptionValueRequest);
-        HttpRequest request = post(uriBuilder, jsonBody);
-        HttpResponse.BodyHandler<VariantOptionValueWrapper> handler = new JsonBodyHandler<>(VariantOptionValueWrapper.class);
+        String jsonBody = objectMapper.writeValueAsString(optionRequest);
+        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpResponse.BodyHandler<OptionWrapper> handler = new JsonBodyHandler<>(OptionWrapper.class);
         return getRequestWrapped(request, handler);
     }
 }
