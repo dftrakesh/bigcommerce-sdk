@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.ordersv2.orderProducts;
+package com.dft.bigcommerce.model.ordersv2.orderproducts;
 
 import lombok.Data;
 

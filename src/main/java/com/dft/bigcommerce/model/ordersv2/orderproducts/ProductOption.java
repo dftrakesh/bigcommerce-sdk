@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.ordersv2.orderProducts;
+package com.dft.bigcommerce.model.ordersv2.orderproducts;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
