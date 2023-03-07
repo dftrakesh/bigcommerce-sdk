@@ -5,7 +5,7 @@
 
     <groupId>io.github.dftrakesh</groupId>
     <artifactId>bigcommerce-sdk</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <packaging>jar</packaging>
 
     <name>bigcommerce-sdk</name>
@@ -33,7 +33,6 @@
     </scm>
 
     <properties>
-        <slf4j.version>1.7.22</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <version.plugin.maven-release-plugin>2.5.2</version.plugin.maven-release-plugin>
