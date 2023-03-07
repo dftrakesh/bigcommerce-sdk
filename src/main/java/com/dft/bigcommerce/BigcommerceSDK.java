@@ -1,25 +1,18 @@
 package com.dft.bigcommerce;
 
-import com.dft.bigcommerce.constantcodes.ConstantCode;
-import com.dft.bigcommerce.handler.JsonBodyHandler;
-import com.dft.bigcommerce.model.product.Product;
-import com.dft.bigcommerce.model.product.ProductsWrapper;
 import lombok.SneakyThrows;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.utils.URIBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import static com.dft.bigcommerce.constantcodes.ConstantCode.AUTH_TOKEN;
+import static com.dft.bigcommerce.constantcodes.ConstantCode.*;
 
 public class BigcommerceSDK {
 
@@ -54,93 +47,77 @@ public class BigcommerceSDK {
     }
 
     @SneakyThrows
-    protected HttpRequest postMultipart(URIBuilder uriBuilder, final byte[] imageData, final File file) {
+    protected HttpRequest postMultipart(URI uri, final byte[] imageData, final File file) {
         final String boundary = "---" + UUID.randomUUID();
         final String crlf = "\r\n";
         final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofByteArray(buildMultipartData(boundary, crlf, imageData, file));
-        return HttpRequest.newBuilder(uriBuilder.build())
-            .header("X-Auth-Token", this.accessToken)
-            .header(HttpHeaders.CONTENT_TYPE, "multipart/form-data; boundary=" + boundary)
-            .header(HttpHeaders.ACCEPT, "application/json")
+        return HttpRequest.newBuilder(uri)
+            .header(AUTH_TOKEN, this.accessToken)
+            .header(CONTENT_TYPE, "multipart/form-data; boundary=" + boundary)
+            .header(ACCEPT, "application/json")
             .POST(body)
             .build();
     }
 
     @SneakyThrows
-    public List<Product> getPaginatedProducts(String path) {
-        List<Product> productList = new ArrayList<>();
-        Integer next = 1;
-        Integer totalPages = 1;
-        while (true) {
-            URIBuilder uriBuilder = baseUrl(new URIBuilder(), path)
-                .addParameter("limit", "250")
-                .addParameter("page", next.toString());
-
-            HttpRequest request = get(uriBuilder);
-            HttpResponse.BodyHandler<ProductsWrapper> handler = new JsonBodyHandler<>(ProductsWrapper.class);
-            ProductsWrapper productsWrapper = getRequestWrapped(request, handler);
-            totalPages = productsWrapper.getMeta().getPagination().getTotalPages();
-            productList.addAll(productsWrapper.getData());
-            next++;
-            if (next == totalPages + 1) {
-                break;
-            }
-        }
-        return productList;
-    }
-
-    protected URIBuilder baseUrl(URIBuilder uriBuilder, String path) {
-        return uriBuilder
-            .setScheme("https")
-            .setHost(ConstantCode.BASE_ENDPOINT + this.storeHash + ConstantCode.VERSION_3)
-            .setPath(path);
-    }
-
-    protected URIBuilder baseUrlV2(URIBuilder uriBuilder, String path) {
-        return uriBuilder
-                .setScheme("https")
-                .setHost(ConstantCode.BASE_ENDPOINT + this.storeHash + ConstantCode.VERSION_2)
-                .setPath(path);
+    protected URI baseUrl(String path) {
+        return new URI(new StringBuilder().append(HTTPS)
+            .append(BASE_ENDPOINT)
+            .append(this.storeHash)
+            .append(VERSION_3)
+            .append(path)
+            .toString());
     }
 
     @SneakyThrows
-    protected HttpRequest get(URIBuilder uriBuilder) {
-        return HttpRequest.newBuilder(uriBuilder.build())
+    protected URI baseUrlV2(String path) {
+        return new URI(new StringBuilder().append(HTTPS)
+                .append(BASE_ENDPOINT)
+                .append(this.storeHash)
+                .append(VERSION_2)
+                .append(path)
+                .toString());
+    }
+
+    @SneakyThrows
+    protected HttpRequest get(URI uri) {
+
+        return HttpRequest.newBuilder(uri)
             .header(AUTH_TOKEN, this.accessToken)
-            .header(HttpHeaders.ACCEPT, "application/json")
+            .header(ACCEPT, "application/json")
             .GET()
             .build();
     }
 
     @SneakyThrows
-    protected HttpRequest post(URIBuilder uriBuilder, final String jsonBody) {
+    protected HttpRequest post(URI uri, final String jsonBody) {
 
-        return HttpRequest.newBuilder(uriBuilder.build())
+        return HttpRequest.newBuilder(uri)
             .header(AUTH_TOKEN, this.accessToken)
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
-            .header(HttpHeaders.ACCEPT, "application/json")
+            .header(CONTENT_TYPE, "application/json")
+            .header(ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
             .build();
     }
 
     @SneakyThrows
-    protected HttpRequest put(URIBuilder uriBuilder, final String jsonBody) {
+    protected HttpRequest put(URI uri, final String jsonBody) {
 
-        return HttpRequest.newBuilder(uriBuilder.build())
+        return HttpRequest.newBuilder(uri)
             .header(AUTH_TOKEN, this.accessToken)
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
-            .header(HttpHeaders.ACCEPT, "application/json")
+            .header(CONTENT_TYPE, "application/json")
+            .header(ACCEPT, "application/json")
             .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
             .build();
     }
 
     @SneakyThrows
-    protected HttpRequest delete(URIBuilder uriBuilder) {
+    protected HttpRequest delete(URI uri) {
 
-        return HttpRequest.newBuilder(uriBuilder.build())
+        return HttpRequest.newBuilder(uri)
             .header(AUTH_TOKEN, this.accessToken)
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
-            .header(HttpHeaders.ACCEPT, "application/json")
+            .header(CONTENT_TYPE, "application/json")
+            .header(ACCEPT, "application/json")
             .DELETE()
             .build();
     }

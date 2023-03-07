@@ -6,10 +6,10 @@ import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
+
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 public class BigcommerceProducts extends BigcommerceSDK {
 
@@ -19,14 +19,10 @@ public class BigcommerceProducts extends BigcommerceSDK {
         super(storeHash, accessToken);
     }
 
-    public List<Product> getProducts() {
-        return getPaginatedProducts("catalog/products");
-    }
-
     public Product getProductById(Integer id) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
+        URI uri = baseUrl("catalog/products/" + id);
 
-        HttpRequest request = get(uriBuilder);
+        HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
         ProductWrapper productWrapper = getRequestWrapped(request, handler);
         return productWrapper.getData();
@@ -34,28 +30,28 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductWrapper createProduct(ProductRequest productRequest) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products");
+        URI uri = baseUrl("catalog/products");
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
-        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
         return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
     public ProductWrapper updateProduct(ProductRequest productRequest, Integer id) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
+        URI uri = baseUrl("catalog/products/" + id);
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
-        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
         return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
     public void deleteProduct(Integer id) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + id);
-        HttpRequest request = delete(uriBuilder);
+        URI uri = baseUrl("catalog/products/" + id);
+        HttpRequest request = delete(uri);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }

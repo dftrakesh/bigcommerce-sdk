@@ -6,8 +6,8 @@ import com.dft.bigcommerce.model.product.brand.BrandRequest;
 import com.dft.bigcommerce.model.product.brand.BrandWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
 
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -21,10 +21,10 @@ public class BigcommerceBrands extends BigcommerceSDK {
 
     @SneakyThrows
     public Brand createBrand(BrandRequest brandRequest) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/brands");
+        URI uri = baseUrl("catalog/brands");
 
         String jsonBody = objectMapper.writeValueAsString(brandRequest);
-        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<BrandWrapper> handler = new JsonBodyHandler<>(BrandWrapper.class);
         BrandWrapper brandWrapper = getRequestWrapped(request, handler);
         return brandWrapper.getData();
@@ -32,9 +32,9 @@ public class BigcommerceBrands extends BigcommerceSDK {
 
     @SneakyThrows
     public Brand getBrand(Integer brandId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/brands/" + brandId);
+        URI uri = baseUrl("/catalog/brands/" + brandId);
 
-        HttpRequest request = get(uriBuilder);
+        HttpRequest request = get(uri);
         HttpResponse.BodyHandler<BrandWrapper> handler = new JsonBodyHandler<>(BrandWrapper.class);
         BrandWrapper brandWrapper = getRequestWrapped(request, handler);
         return brandWrapper.getData();
@@ -42,10 +42,10 @@ public class BigcommerceBrands extends BigcommerceSDK {
 
     @SneakyThrows
     public Brand updateBrand(Integer brandId, BrandRequest brandRequest) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/brands/" + brandId);
+        URI uri = baseUrl("/catalog/brands/" + brandId);
 
         String jsonBody = objectMapper.writeValueAsString(brandRequest);
-        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<BrandWrapper> handler = new JsonBodyHandler<>(BrandWrapper.class);
         BrandWrapper brandWrapper = getRequestWrapped(request, handler);
         return brandWrapper.getData();

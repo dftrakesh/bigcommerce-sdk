@@ -5,8 +5,8 @@ import com.dft.bigcommerce.model.product.categorybatch.Category;
 import com.dft.bigcommerce.model.product.categorybatch.CategoryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
 
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
@@ -21,10 +21,10 @@ public class BigcommerceCategoriesBatch extends BigcommerceSDK {
 
     @SneakyThrows
     public CategoryWrapper createCategory(List<Category> categoryList) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/trees/categories");
+        URI uri = baseUrl("catalog/trees/categories");
 
         String jsonBody = objectMapper.writeValueAsString(categoryList);
-        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<CategoryWrapper> handler = new JsonBodyHandler<>(CategoryWrapper.class);
         return getRequestWrapped(request, handler);
     }
