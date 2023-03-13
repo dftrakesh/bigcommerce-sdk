@@ -1,5 +1,7 @@
 package com.dft.bigcommerce;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.SneakyThrows;
 
 import java.io.ByteArrayOutputStream;
@@ -14,6 +16,8 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.dft.bigcommerce.constantcodes.ConstantCode.*;
 
+@AllArgsConstructor
+@Builder(builderMethodName = "newBuilder", toBuilder = true)
 public class BigcommerceSDK {
 
     private final String accessToken;
@@ -143,5 +147,25 @@ public class BigcommerceSDK {
                 .thenComposeAsync(response -> tryResend(client, request, handler, response, count + 1));
         }
         return CompletableFuture.completedFuture(resp);
+    }
+
+    public BigcommerceOrders getOrderApi() {
+        return new BigcommerceOrders(storeHash, accessToken);
+    }
+
+    public BigcommerceOrderProductsV2 getOrderProductsApi() {
+        return new BigcommerceOrderProductsV2(storeHash, accessToken);
+    }
+
+    public BigcommerceStoreInformationV2 getStoreInfoApi() {
+        return new BigcommerceStoreInformationV2(storeHash, accessToken);
+    }
+
+    public BigcommerceProducts getProductApi() {
+        return new BigcommerceProducts(storeHash, accessToken);
+    }
+
+    public BigcommerceOrderShippingAddressesV2 getShippingAddressApi(){
+        return new BigcommerceOrderShippingAddressesV2(storeHash, accessToken);
     }
 }
