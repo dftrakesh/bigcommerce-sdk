@@ -5,7 +5,8 @@ import com.dft.bigcommerce.model.optionvalue.VariantOptionValueRequest;
 import com.dft.bigcommerce.model.optionvalue.VariantOptionValueWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
+
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -19,18 +20,18 @@ public class BigcommerceOptionValue extends BigcommerceSDK {
 
     @SneakyThrows
     public VariantOptionValueWrapper createVariantOptionValue(VariantOptionValueRequest variantOptionValueRequest, Integer productId, Integer optionId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/options/" + optionId + "/values");
+        URI uri = baseUrl("catalog/products/" + productId + "/options/" + optionId + "/values");
 
         String jsonBody = objectMapper.writeValueAsString(variantOptionValueRequest);
-        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpRequest request = post(uri, jsonBody);
         HttpResponse.BodyHandler<VariantOptionValueWrapper> handler = new JsonBodyHandler<>(VariantOptionValueWrapper.class);
         return getRequestWrapped(request, handler);
     }
 
     @SneakyThrows
     public void deleteVariantOptionValue(Integer productId, Integer optionId, Integer valueId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId +"/options/" + optionId + "/values/"+ valueId );
-        HttpRequest request = delete(uriBuilder);
+        URI uri = baseUrl("catalog/products/" + productId +"/options/" + optionId + "/values/"+ valueId );
+        HttpRequest request = delete(uri);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
 }

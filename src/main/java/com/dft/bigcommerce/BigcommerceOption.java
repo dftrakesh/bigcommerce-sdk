@@ -5,7 +5,8 @@ import com.dft.bigcommerce.model.option.OptionRequest;
 import com.dft.bigcommerce.model.option.OptionWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
+
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -19,10 +20,10 @@ public class BigcommerceOption extends BigcommerceSDK {
 
     @SneakyThrows
     public OptionWrapper updateOption(OptionRequest optionRequest, Integer productId, Integer optionId) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "catalog/products/" + productId + "/options/" + optionId);
+        URI uri = baseUrl("catalog/products/" + productId + "/options/" + optionId);
 
         String jsonBody = objectMapper.writeValueAsString(optionRequest);
-        HttpRequest request = put(uriBuilder, jsonBody);
+        HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<OptionWrapper> handler = new JsonBodyHandler<>(OptionWrapper.class);
         return getRequestWrapped(request, handler);
     }

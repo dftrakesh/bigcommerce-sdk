@@ -5,9 +5,9 @@ import com.dft.bigcommerce.model.product.productImages.ProductImageRequest;
 import com.dft.bigcommerce.model.product.productImages.ProductImageWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.apache.http.client.utils.URIBuilder;
 
 import java.io.File;
+import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
@@ -23,10 +23,10 @@ public class BigcommerceProductImages extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductImageWrapper createProductImage(Integer productId, ProductImageRequest productImageRequest) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/products/" + productId + "/images");
+        URI uri = baseUrl("/catalog/products/" + productId + "/images");
 
         String jsonBody = objectMapper.writeValueAsString(productImageRequest);
-        HttpRequest request = post(uriBuilder, jsonBody);
+        HttpRequest request = post(uri, jsonBody);
 
         HttpResponse.BodyHandler<ProductImageWrapper> handler = new JsonBodyHandler<>(ProductImageWrapper.class);
         return getRequestWrapped(request, handler);
@@ -34,10 +34,10 @@ public class BigcommerceProductImages extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductImageWrapper createProductImage(Integer productId, File imageFile) {
-        URIBuilder uriBuilder = baseUrl(new URIBuilder(), "/catalog/products/" + productId + "/images");
+        URI uri = baseUrl("/catalog/products/" + productId + "/images");
 
         byte[] imageData = Files.readAllBytes(Paths.get(imageFile.toURI()));
-        HttpRequest request = postMultipart(uriBuilder, imageData, imageFile);
+        HttpRequest request = postMultipart(uri, imageData, imageFile);
 
         HttpResponse.BodyHandler<ProductImageWrapper> handler = new JsonBodyHandler<>(ProductImageWrapper.class);
         return getRequestWrapped(request, handler);
