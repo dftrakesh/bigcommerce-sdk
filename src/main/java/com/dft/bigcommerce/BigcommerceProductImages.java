@@ -3,6 +3,8 @@ package com.dft.bigcommerce;
 import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.productImages.ProductImageRequest;
 import com.dft.bigcommerce.model.product.productImages.ProductImageWrapper;
+import com.dft.bigcommerce.model.product.productImages.ProductImagesWrapper;
+import com.dft.bigcommerce.model.product.productmeta.ProductMetaWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
@@ -40,6 +42,15 @@ public class BigcommerceProductImages extends BigcommerceSDK {
         HttpRequest request = postMultipart(uri, imageData, imageFile);
 
         HttpResponse.BodyHandler<ProductImageWrapper> handler = new JsonBodyHandler<>(ProductImageWrapper.class);
+        return getRequestWrapped(request, handler);
+    }
+
+
+    @SneakyThrows
+    public ProductImagesWrapper getProductImageByProductId(Integer productId) {
+        URI uri = baseUrl("/catalog/products/" + productId + "/images");
+        HttpRequest request = get(uri);
+        HttpResponse.BodyHandler<ProductImagesWrapper> handler = new JsonBodyHandler<>(ProductImagesWrapper.class);
         return getRequestWrapped(request, handler);
     }
 }

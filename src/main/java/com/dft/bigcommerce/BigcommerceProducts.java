@@ -4,6 +4,8 @@ import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.Product;
 import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
+import com.dft.bigcommerce.model.product.bulkpricingrule.ProductBulkPricingRulesWrapper;
+import com.dft.bigcommerce.model.product.productImages.ProductImagesWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 
@@ -53,5 +55,13 @@ public class BigcommerceProducts extends BigcommerceSDK {
         URI uri = baseUrl("catalog/products/" + id);
         HttpRequest request = delete(uri);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    @SneakyThrows
+    public ProductBulkPricingRulesWrapper getBulkPricingRulesByProductId(Integer productId) {
+        URI uri = baseUrl("/catalog/products/" + productId + "/bulk-pricing-rules");
+        HttpRequest request = get(uri);
+        HttpResponse.BodyHandler<ProductBulkPricingRulesWrapper> handler = new JsonBodyHandler<>(ProductBulkPricingRulesWrapper.class);
+        return getRequestWrapped(request, handler);
     }
 }
