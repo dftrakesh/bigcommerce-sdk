@@ -16,7 +16,7 @@ public class BigcommerceProductMetaField extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductMetaWrapper getProductMetaFieldsByProductId(Integer productId) {
-        URI uri = baseUrl("catalog/products/" + productId + "/metafields");
+        URI uri = baseUrl("/catalog/products/" + productId + "/metafields");
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductMetaWrapper> handler = new JsonBodyHandler<>(ProductMetaWrapper.class);
         return getRequestWrapped(request, handler);

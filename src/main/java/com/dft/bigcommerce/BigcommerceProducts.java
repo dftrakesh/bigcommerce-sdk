@@ -22,7 +22,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
     }
 
     public Product getProductById(Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
@@ -32,7 +32,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductWrapper createProduct(ProductRequest productRequest) {
-        URI uri = baseUrl("catalog/products");
+        URI uri = baseUrl("/catalog/products");
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = post(uri, jsonBody);
@@ -42,7 +42,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductWrapper updateProduct(ProductRequest productRequest, Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = put(uri, jsonBody);
@@ -52,7 +52,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public void deleteProduct(Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
         HttpRequest request = delete(uri);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
