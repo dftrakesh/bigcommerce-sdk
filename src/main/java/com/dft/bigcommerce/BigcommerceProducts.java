@@ -4,6 +4,8 @@ import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.Product;
 import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
+import com.dft.bigcommerce.model.product.bulkpricingrule.ProductBulkPricingRulesWrapper;
+import com.dft.bigcommerce.model.product.productImages.ProductImagesWrapper;
 import com.dft.bigcommerce.model.product.ProductsWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -24,7 +26,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
     }
 
     public Product getProductById(Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
@@ -34,7 +36,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductWrapper createProduct(ProductRequest productRequest) {
-        URI uri = baseUrl("catalog/products");
+        URI uri = baseUrl("/catalog/products");
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = post(uri, jsonBody);
@@ -44,7 +46,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public ProductWrapper updateProduct(ProductRequest productRequest, Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = put(uri, jsonBody);
@@ -54,7 +56,7 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     @SneakyThrows
     public void deleteProduct(Integer id) {
-        URI uri = baseUrl("catalog/products/" + id);
+        URI uri = baseUrl("/catalog/products/" + id);
         HttpRequest request = delete(uri);
         getRequestWrapped(request, HttpResponse.BodyHandlers.ofString());
     }
@@ -62,9 +64,16 @@ public class BigcommerceProducts extends BigcommerceSDK {
     @SneakyThrows
     public ProductsWrapper getAllProduct() {
         URI uri = baseUrl(CATALOG_ENDPOINT.concat(PRODUCTS_ENDPOINT));
-
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductsWrapper> handler = new JsonBodyHandler<>(ProductsWrapper.class);
         return getRequestWrapped(request, handler);
     }
+    
+    @SneakyThrows
+    public ProductBulkPricingRulesWrapper getBulkPricingRulesByProductId(Integer productId) {
+        URI uri = baseUrl("/catalog/products/" + productId + "/bulk-pricing-rules");
+        HttpRequest request = get(uri);
+        HttpResponse.BodyHandler<ProductBulkPricingRulesWrapper> handler = new JsonBodyHandler<>(ProductBulkPricingRulesWrapper.class);
+        return getRequestWrapped(request, handler);
+    }        
 }
