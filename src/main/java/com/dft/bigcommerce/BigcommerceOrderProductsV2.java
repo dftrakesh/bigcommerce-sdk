@@ -9,9 +9,11 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static com.dft.bigcommerce.constantcodes.ConstantCode.*;
-
 public class BigcommerceOrderProductsV2 extends BigcommerceSDK {
+
+    private static final String FORWARD_SLASH_CHARACTER = "/";
+    private static final String ORDERS_ENDPOINT = "/orders";
+    private static final String PRODUCTS_ENDPOINT = "/products";
 
     public BigcommerceOrderProductsV2(String storeHash, String accessToken) {
         super(storeHash, accessToken);
@@ -19,7 +21,7 @@ public class BigcommerceOrderProductsV2 extends BigcommerceSDK {
 
     @SneakyThrows
     public OrderProductsWrapper getAllOrderProducts(Integer orderId) {
-        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(SLASH_CHARACTER)
+        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
                 .concat(orderId.toString())
                 .concat(PRODUCTS_ENDPOINT));
 
@@ -30,10 +32,10 @@ public class BigcommerceOrderProductsV2 extends BigcommerceSDK {
 
     @SneakyThrows
     public OrderProductWrapper getOrderProductById(Integer orderId, Integer productId) {
-        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(SLASH_CHARACTER)
+        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
                 .concat(orderId.toString())
                 .concat(PRODUCTS_ENDPOINT)
-                .concat(SLASH_CHARACTER)
+                .concat(FORWARD_SLASH_CHARACTER)
                 .concat(productId.toString()));
 
         HttpRequest request = get(uri);
