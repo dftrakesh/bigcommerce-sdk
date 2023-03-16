@@ -14,8 +14,6 @@ import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-import static com.dft.bigcommerce.constantcodes.ConstantCode.*;
-
 @AllArgsConstructor
 @Builder(builderMethodName = "newBuilder", toBuilder = true)
 public class BigcommerceSDK {
@@ -25,7 +23,14 @@ public class BigcommerceSDK {
     private final HttpClient client;
     int MAX_ATTEMPTS = 50;
     int TIME_OUT_DURATION = 60000;
-
+    private static final String FORWARD_SLASH_CHARACTER = "/";
+    private static final String AUTH_TOKEN = "X-Auth-Token";
+    private static final String ACCEPT = "Accept";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String BASE_ENDPOINT = "api.bigcommerce.com/stores/";
+    private static final String VERSION_3 = "/v3";
+    private static final String VERSION_2 = "/v2";
+    private static final String HTTPS = "https://";
 
     public BigcommerceSDK(String storeHash, String accessToken) {
         this.accessToken = accessToken;
@@ -167,5 +172,13 @@ public class BigcommerceSDK {
 
     public BigcommerceOrderShippingAddressesV2 getShippingAddressApi(){
         return new BigcommerceOrderShippingAddressesV2(storeHash, accessToken);
+    }
+
+    public BigcommerceWebhooks getWebhookApi(){
+        return new BigcommerceWebhooks(storeHash, accessToken);
+    }
+
+    public BigcommerceUpdateInventory getUpdateInventoryApi(){
+        return new BigcommerceUpdateInventory(storeHash, accessToken);
     }
 }

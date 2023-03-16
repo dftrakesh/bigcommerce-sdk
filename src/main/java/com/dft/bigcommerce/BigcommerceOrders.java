@@ -11,12 +11,11 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static com.dft.bigcommerce.constantcodes.ConstantCode.ORDERS_ENDPOINT;
-import static com.dft.bigcommerce.constantcodes.ConstantCode.SLASH_CHARACTER;
-
 public class BigcommerceOrders extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String ORDERS_ENDPOINT = "/orders";
+    private static final String FORWARD_SLASH_CHARACTER = "/";
 
     public BigcommerceOrders(String storeHash, String accessToken) {
         super(storeHash, accessToken);
@@ -24,7 +23,7 @@ public class BigcommerceOrders extends BigcommerceSDK {
 
     @SneakyThrows
     public OrderWrapper getOrderById(Integer orderId) {
-        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(SLASH_CHARACTER)
+        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
                 .concat(orderId.toString()));
 
         HttpRequest request = get(uri);
@@ -34,7 +33,7 @@ public class BigcommerceOrders extends BigcommerceSDK {
 
     @SneakyThrows
     public OrderWrapper updateOrder(Integer orderId, OrderRequest orderRequest) {
-        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(SLASH_CHARACTER)
+        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
                 .concat(orderId.toString()));
 
         String jsonBody = objectMapper.writeValueAsString(orderRequest);
@@ -45,7 +44,7 @@ public class BigcommerceOrders extends BigcommerceSDK {
 
     @SneakyThrows
     public void archiveAnOrder(Integer orderId) {
-        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(SLASH_CHARACTER)
+        URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
                 .concat(orderId.toString()));
 
         HttpRequest request = delete(uri);
