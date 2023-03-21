@@ -5,7 +5,7 @@ import com.dft.bigcommerce.model.product.Product;
 import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
 import com.dft.bigcommerce.model.product.bulkpricingrule.ProductBulkPricingRulesWrapper;
-import com.dft.bigcommerce.model.product.productImages.ProductImagesWrapper;
+import com.dft.bigcommerce.model.product.customfields.ProductCustomFieldWrapper;
 import com.dft.bigcommerce.model.product.ProductsWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -68,12 +68,20 @@ public class BigcommerceProducts extends BigcommerceSDK {
         HttpResponse.BodyHandler<ProductsWrapper> handler = new JsonBodyHandler<>(ProductsWrapper.class);
         return getRequestWrapped(request, handler);
     }
-    
+
     @SneakyThrows
     public ProductBulkPricingRulesWrapper getBulkPricingRulesByProductId(Integer productId) {
         URI uri = baseUrl("/catalog/products/" + productId + "/bulk-pricing-rules");
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<ProductBulkPricingRulesWrapper> handler = new JsonBodyHandler<>(ProductBulkPricingRulesWrapper.class);
         return getRequestWrapped(request, handler);
-    }        
+    }
+
+    @SneakyThrows
+    public ProductCustomFieldWrapper getCustomFields(Integer productId) {
+        URI uri = baseUrl("/catalog/products/" + productId + "/custom-fields");
+        HttpRequest request = get(uri);
+        HttpResponse.BodyHandler<ProductCustomFieldWrapper> handler = new JsonBodyHandler<>(ProductCustomFieldWrapper.class);
+        return getRequestWrapped(request, handler);
+    }
 }

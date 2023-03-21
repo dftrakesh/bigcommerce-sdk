@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.product.productmeta;
+package com.dft.bigcommerce.model.product.customfields;
 
 import com.dft.bigcommerce.model.common.Meta;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,8 +11,8 @@ import java.util.List;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductMetaWrapper {
+public class ProductCustomFieldWrapper {
 
-    private List<MetaData> data = null;
+    private List<CustomField> data;
     private Meta meta;
 }
