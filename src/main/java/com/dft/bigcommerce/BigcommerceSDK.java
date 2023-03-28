@@ -204,4 +204,8 @@ public class BigcommerceSDK {
     public BigcommerceProductsVariants getProductVariantApi(){
         return new BigcommerceProductsVariants(storeHash, accessToken);
     }
+
+    public BigcommerceProductImages getProductImageApi(){
+        return new BigcommerceProductImages(storeHash, accessToken);
+    }
 }
