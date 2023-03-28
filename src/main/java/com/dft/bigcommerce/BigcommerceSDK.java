@@ -11,6 +11,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -86,6 +88,23 @@ public class BigcommerceSDK {
                 .append(VERSION_2)
                 .append(path)
                 .toString());
+    }
+
+    @SneakyThrows
+    protected URI addParameters(URI uri, HashMap<String, String> params) {
+
+        String query = uri.getQuery();
+        StringBuilder builder = new StringBuilder();
+        if (query != null)
+            builder.append(query);
+
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String keyValueParam = entry.getKey() + "=" + entry.getValue();
+            if (!builder.toString().isEmpty())
+                builder.append("&");
+            builder.append(keyValueParam);
+        }
+        return new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), builder.toString(), uri.getFragment());
     }
 
     @SneakyThrows
@@ -180,5 +199,9 @@ public class BigcommerceSDK {
 
     public BigcommerceUpdateInventory getUpdateInventoryApi(){
         return new BigcommerceUpdateInventory(storeHash, accessToken);
+    }
+
+    public BigcommerceProductsVariants getProductVariantApi(){
+        return new BigcommerceProductsVariants(storeHash, accessToken);
     }
 }
