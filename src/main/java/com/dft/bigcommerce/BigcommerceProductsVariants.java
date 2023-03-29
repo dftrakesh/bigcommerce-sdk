@@ -4,6 +4,7 @@ import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.product.variant.ProductVariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantWrapper;
+import com.dft.bigcommerce.model.product.variant.VariantsWrapper;
 import com.dft.bigcommerce.model.product.variantimage.VariantImageRequest;
 import com.dft.bigcommerce.model.product.variantimage.VariantImageWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,17 +13,38 @@ import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 
 public class BigcommerceProductsVariants extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private static final String FORWARD_SLASH_CHARACTER = "/";
+    private static final String VARIANTS_ENDPOINT = "/variants";
+    private static final String CATALOG_PRODUCTS_ENDPOINT = "/catalog/products";
+
     public BigcommerceProductsVariants(String storeHash, String accessToken) {
         super(storeHash, accessToken);
     }
 
-    public VariantWrapper getProductVariantById(Integer productId, Integer variantId) {
-        URI uri = baseUrl("/catalog/products/" + productId + "/variants/" + variantId);
+    public VariantsWrapper getAllProductVariant(Integer productId, HashMap<String, String> params) {
+        URI uri = baseUrl(CATALOG_PRODUCTS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
+                .concat(productId.toString())
+                .concat(VARIANTS_ENDPOINT));
+        uri = addParameters(uri, params);
+
+        HttpRequest request = get(uri);
+        HttpResponse.BodyHandler<VariantsWrapper> handler = new JsonBodyHandler<>(VariantsWrapper.class);
+        return getRequestWrapped(request, handler);
+    }
+
+    public VariantWrapper getProductVariantById(Integer productId, Integer variantId, HashMap<String, String> params) {
+        URI uri = baseUrl(CATALOG_PRODUCTS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
+                .concat(productId.toString())
+                .concat(VARIANTS_ENDPOINT)
+                .concat(FORWARD_SLASH_CHARACTER)
+                .concat(variantId.toString()));
+        uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<VariantWrapper> handler = new JsonBodyHandler<>(VariantWrapper.class);

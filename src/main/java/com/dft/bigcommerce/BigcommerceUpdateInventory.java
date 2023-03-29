@@ -32,7 +32,6 @@ public class BigcommerceUpdateInventory extends BigcommerceSDK {
                 .concat(FORWARD_SLASH_CHARACTER)
                 .concat(productId.toString()));
 
-        System.out.println("uri: " + uri);
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = put(uri, jsonBody);
         HttpResponse.BodyHandler<ProductWrapper> handler = new JsonBodyHandler<>(ProductWrapper.class);
