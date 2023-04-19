@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 
 public class BigcommerceOrders extends BigcommerceSDK {
 
@@ -52,8 +53,9 @@ public class BigcommerceOrders extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public OrdersWrapper getAllOrder() {
+    public OrdersWrapper getAllOrder(HashMap<String, String> params) {
         URI uri = baseUrlV2(ORDERS_ENDPOINT);
+        uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<OrdersWrapper> handler = new JsonBodyHandler<>(OrdersWrapper.class);

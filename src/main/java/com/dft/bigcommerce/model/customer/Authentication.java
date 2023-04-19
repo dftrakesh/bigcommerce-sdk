@@ -1,6 +1,5 @@
-package com.dft.bigcommerce.model.product.category;
+package com.dft.bigcommerce.model.customer;
 
-import com.dft.bigcommerce.model.common.Meta;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -9,8 +8,9 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CategoryWrapper {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class Authentication {
 
-    private Category data;
-    private Meta meta;
+    private Boolean forcePasswordReset;
 }
