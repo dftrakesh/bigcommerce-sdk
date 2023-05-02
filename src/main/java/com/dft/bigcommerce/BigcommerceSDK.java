@@ -220,4 +220,8 @@ public class BigcommerceSDK {
     public BigcommerceCategories getCategoriesApi(){
         return new BigcommerceCategories(storeHash, accessToken);
     }
+
+    public BigcommerceCustomerAddresses getCustomerAddressApi(){
+        return new BigcommerceCustomerAddresses(storeHash, accessToken);
+    }
 }
