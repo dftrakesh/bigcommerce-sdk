@@ -1,5 +1,6 @@
 package com.dft.bigcommerce.model.product;
 
+import com.dft.bigcommerce.model.product.image.Image;
 import com.dft.bigcommerce.model.product.variant.Variant;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -85,5 +86,5 @@ public class Product {
     private Boolean openGraphUseMetaDescription;
     private Boolean openGraphUseProductName;
     private Boolean openGraphUseImage;
-
+    private List<Image> images;
 }
