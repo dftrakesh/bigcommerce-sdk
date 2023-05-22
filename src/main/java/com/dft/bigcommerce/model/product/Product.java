@@ -31,7 +31,7 @@ public class Product {
     private Double costPrice;
     private Double retailPrice;
     private Double salePrice;
-    private Integer mapPrice;
+    private Double mapPrice;
     private Integer taxClassId;
     private String productTaxCode;
     private Double calculatedPrice;
