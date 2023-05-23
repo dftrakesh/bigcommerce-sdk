@@ -1,6 +1,7 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.variant.ProductVariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantWrapper;
@@ -9,7 +10,6 @@ import com.dft.bigcommerce.model.product.variantimage.VariantImageRequest;
 import com.dft.bigcommerce.model.product.variantimage.VariantImageWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -23,14 +23,14 @@ public class BigcommerceProductsVariants extends BigcommerceSDK {
     private static final String VARIANTS_ENDPOINT = "/variants";
     private static final String CATALOG_PRODUCTS_ENDPOINT = "/catalog/products";
 
-    public BigcommerceProductsVariants(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceProductsVariants(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     public VariantsWrapper getAllProductVariant(Integer productId, HashMap<String, String> params) {
         URI uri = baseUrl(CATALOG_PRODUCTS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
-                .concat(productId.toString())
-                .concat(VARIANTS_ENDPOINT));
+            .concat(productId.toString())
+            .concat(VARIANTS_ENDPOINT));
         uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);

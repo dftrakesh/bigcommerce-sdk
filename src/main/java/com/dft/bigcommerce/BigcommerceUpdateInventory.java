@@ -1,13 +1,13 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
 import com.dft.bigcommerce.model.product.variant.ProductVariantRequest;
 import com.dft.bigcommerce.model.product.variant.VariantWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,16 +21,16 @@ public class BigcommerceUpdateInventory extends BigcommerceSDK {
     private static final String VARIANTS_ENDPOINT = "/variants";
     private static final String FORWARD_SLASH_CHARACTER = "/";
 
-    public BigcommerceUpdateInventory(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceUpdateInventory(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows
     public ProductWrapper updateProductInventory(ProductRequest productRequest, Integer productId) {
         URI uri = baseUrl(CATALOG_ENDPOINT
-                .concat(PRODUCTS_ENDPOINT)
-                .concat(FORWARD_SLASH_CHARACTER)
-                .concat(productId.toString()));
+            .concat(PRODUCTS_ENDPOINT)
+            .concat(FORWARD_SLASH_CHARACTER)
+            .concat(productId.toString()));
 
         String jsonBody = objectMapper.writeValueAsString(productRequest);
         HttpRequest request = put(uri, jsonBody);

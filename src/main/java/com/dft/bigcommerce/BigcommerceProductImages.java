@@ -1,13 +1,12 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.productImages.ProductImageRequest;
 import com.dft.bigcommerce.model.product.productImages.ProductImageWrapper;
 import com.dft.bigcommerce.model.product.productImages.ProductImagesWrapper;
-import com.dft.bigcommerce.model.product.productmeta.ProductMetaWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.io.File;
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -19,8 +18,8 @@ public class BigcommerceProductImages extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceProductImages(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceProductImages(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows
