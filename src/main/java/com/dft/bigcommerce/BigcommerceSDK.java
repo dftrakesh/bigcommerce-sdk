@@ -1,9 +1,9 @@
 package com.dft.bigcommerce;
 
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.URI;
@@ -20,11 +20,10 @@ import java.util.concurrent.CompletableFuture;
 @Builder(builderMethodName = "newBuilder", toBuilder = true)
 public class BigcommerceSDK {
 
-    private final String accessToken;
-    private final String storeHash;
-    private final HttpClient client;
     int MAX_ATTEMPTS = 50;
     int TIME_OUT_DURATION = 60000;
+    private final HttpClient client;
+    private final BigcommerceCredentials credentials;
     private static final String FORWARD_SLASH_CHARACTER = "/";
     private static final String AUTH_TOKEN = "X-Auth-Token";
     private static final String ACCEPT = "Accept";
@@ -34,9 +33,8 @@ public class BigcommerceSDK {
     private static final String VERSION_2 = "/v2";
     private static final String HTTPS = "https://";
 
-    public BigcommerceSDK(String storeHash, String accessToken) {
-        this.accessToken = accessToken;
-        this.storeHash = storeHash;
+    public BigcommerceSDK(BigcommerceCredentials credentials) {
+        this.credentials = credentials;
         client = HttpClient.newBuilder()
             .followRedirects(HttpClient.Redirect.ALWAYS)
             .version(HttpClient.Version.HTTP_1_1)
@@ -63,7 +61,7 @@ public class BigcommerceSDK {
         final String crlf = "\r\n";
         final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofByteArray(buildMultipartData(boundary, crlf, imageData, file));
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.credentials.getAccessToken())
             .header(CONTENT_TYPE, "multipart/form-data; boundary=" + boundary)
             .header(ACCEPT, "application/json")
             .POST(body)
@@ -74,7 +72,7 @@ public class BigcommerceSDK {
     protected URI baseUrl(String path) {
         return new URI(new StringBuilder().append(HTTPS)
             .append(BASE_ENDPOINT)
-            .append(this.storeHash)
+            .append(this.credentials.getStoreHash())
             .append(VERSION_3)
             .append(path)
             .toString());
@@ -83,8 +81,8 @@ public class BigcommerceSDK {
     @SneakyThrows
     protected URI baseUrlV2(String path) {
         return new URI(new StringBuilder().append(HTTPS)
-                .append(BASE_ENDPOINT)
-                .append(this.storeHash)
+            .append(BASE_ENDPOINT)
+            .append(this.credentials.getStoreHash())
                 .append(VERSION_2)
                 .append(path)
                 .toString());
@@ -111,7 +109,7 @@ public class BigcommerceSDK {
     protected HttpRequest get(URI uri) {
 
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.credentials.getAccessToken())
             .header(ACCEPT, "application/json")
             .GET()
             .build();
@@ -121,7 +119,7 @@ public class BigcommerceSDK {
     protected HttpRequest post(URI uri, final String jsonBody) {
 
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.credentials.getAccessToken())
             .header(CONTENT_TYPE, "application/json")
             .header(ACCEPT, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -132,7 +130,7 @@ public class BigcommerceSDK {
     protected HttpRequest put(URI uri, final String jsonBody) {
 
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.credentials.getAccessToken())
             .header(CONTENT_TYPE, "application/json")
             .header(ACCEPT, "application/json")
             .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -143,7 +141,7 @@ public class BigcommerceSDK {
     protected HttpRequest delete(URI uri) {
 
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.accessToken)
+            .header(AUTH_TOKEN, this.credentials.getAccessToken())
             .header(CONTENT_TYPE, "application/json")
             .header(ACCEPT, "application/json")
             .DELETE()
@@ -174,54 +172,54 @@ public class BigcommerceSDK {
     }
 
     public BigcommerceOrders getOrderApi() {
-        return new BigcommerceOrders(storeHash, accessToken);
+        return new BigcommerceOrders(credentials);
     }
 
     public BigcommerceOrderProductsV2 getOrderProductsApi() {
-        return new BigcommerceOrderProductsV2(storeHash, accessToken);
+        return new BigcommerceOrderProductsV2(credentials);
     }
 
     public BigcommerceStoreInformationV2 getStoreInfoApi() {
-        return new BigcommerceStoreInformationV2(storeHash, accessToken);
+        return new BigcommerceStoreInformationV2(credentials);
     }
 
     public BigcommerceProducts getProductApi() {
-        return new BigcommerceProducts(storeHash, accessToken);
+        return new BigcommerceProducts(credentials);
     }
 
     public BigcommerceOrderShippingAddressesV2 getShippingAddressApi(){
-        return new BigcommerceOrderShippingAddressesV2(storeHash, accessToken);
+        return new BigcommerceOrderShippingAddressesV2(credentials);
     }
 
     public BigcommerceWebhooks getWebhookApi(){
-        return new BigcommerceWebhooks(storeHash, accessToken);
+        return new BigcommerceWebhooks(credentials);
     }
 
     public BigcommerceUpdateInventory getUpdateInventoryApi(){
-        return new BigcommerceUpdateInventory(storeHash, accessToken);
+        return new BigcommerceUpdateInventory(credentials);
     }
 
     public BigcommerceProductsVariants getProductVariantApi(){
-        return new BigcommerceProductsVariants(storeHash, accessToken);
+        return new BigcommerceProductsVariants(credentials);
     }
 
     public BigcommerceProductImages getProductImageApi(){
-        return new BigcommerceProductImages(storeHash, accessToken);
+        return new BigcommerceProductImages(credentials);
     }
 
     public BigcommerceCustomer getCustomerApi() {
-        return new BigcommerceCustomer(storeHash, accessToken);
+        return new BigcommerceCustomer(credentials);
     }
 
     public BigcommerceBrands getBrandsApi(){
-        return new BigcommerceBrands(storeHash, accessToken);
+        return new BigcommerceBrands(credentials);
     }
 
     public BigcommerceCategories getCategoriesApi(){
-        return new BigcommerceCategories(storeHash, accessToken);
+        return new BigcommerceCategories(credentials);
     }
 
     public BigcommerceCustomerAddresses getCustomerAddressApi(){
-        return new BigcommerceCustomerAddresses(storeHash, accessToken);
+        return new BigcommerceCustomerAddresses(credentials);
     }
 }

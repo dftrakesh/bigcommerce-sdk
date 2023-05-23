@@ -1,17 +1,17 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.productmeta.ProductMetaWrapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class BigcommerceProductMetaField extends BigcommerceSDK {
 
-    public BigcommerceProductMetaField(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceProductMetaField(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows

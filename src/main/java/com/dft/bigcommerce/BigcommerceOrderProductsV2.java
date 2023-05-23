@@ -1,10 +1,10 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.ordersv2.orderproducts.OrderProductWrapper;
 import com.dft.bigcommerce.model.ordersv2.orderproducts.OrderProductsWrapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -15,15 +15,15 @@ public class BigcommerceOrderProductsV2 extends BigcommerceSDK {
     private static final String ORDERS_ENDPOINT = "/orders";
     private static final String PRODUCTS_ENDPOINT = "/products";
 
-    public BigcommerceOrderProductsV2(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceOrderProductsV2(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows
     public OrderProductsWrapper getAllOrderProducts(Integer orderId) {
         URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
-                .concat(orderId.toString())
-                .concat(PRODUCTS_ENDPOINT));
+            .concat(orderId.toString())
+            .concat(PRODUCTS_ENDPOINT));
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<OrderProductsWrapper> handler = new JsonBodyHandler<>(OrderProductsWrapper.class);

@@ -19,7 +19,7 @@ public class Variant {
     private String sku;
     private Integer skuId;
     private Double price;
-    private Integer calculatedPrice;
+    private Double calculatedPrice;
     private Double salePrice;
     private Double retailPrice;
     private Double mapPrice;

@@ -1,10 +1,10 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.ordersv2.ordershippingaddresses.OrderShippingAddressWrapper;
 import com.dft.bigcommerce.model.ordersv2.ordershippingaddresses.OrderShippingAddressesWrapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -15,15 +15,15 @@ public class BigcommerceOrderShippingAddressesV2 extends BigcommerceSDK {
     private static final String ORDERS_ENDPOINT = "/orders";
     private static final String SHIPPING_ADDRESSES_ENDPOINT = "/shipping_addresses";
 
-    public BigcommerceOrderShippingAddressesV2(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceOrderShippingAddressesV2(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows
     public OrderShippingAddressesWrapper getOrderShippingAddressesById(Integer orderId) {
         URI uri = baseUrlV2((ORDERS_ENDPOINT).concat(FORWARD_SLASH_CHARACTER)
-                .concat(orderId.toString())
-                .concat(SHIPPING_ADDRESSES_ENDPOINT));
+            .concat(orderId.toString())
+            .concat(SHIPPING_ADDRESSES_ENDPOINT));
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<OrderShippingAddressesWrapper> handler = new JsonBodyHandler<>(OrderShippingAddressesWrapper.class);

@@ -1,13 +1,13 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.brand.Brand;
 import com.dft.bigcommerce.model.product.brand.BrandRequest;
 import com.dft.bigcommerce.model.product.brand.BrandWrapper;
 import com.dft.bigcommerce.model.product.brand.BrandsWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -20,8 +20,8 @@ public class BigcommerceBrands extends BigcommerceSDK {
     private static final String FORWARD_SLASH_CHARACTER = "/";
     private static final String CATALOG_BRANDS_ENDPOINT = "/catalog/brands";
 
-    public BigcommerceBrands(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceBrands(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows

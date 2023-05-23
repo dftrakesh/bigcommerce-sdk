@@ -1,12 +1,12 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldRequest;
 import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldWrapper;
 import com.dft.bigcommerce.model.product.brandMetafields.BrandMetafieldsWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -15,8 +15,8 @@ public class BigcommerceBrandMetafield extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceBrandMetafield(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceBrandMetafield(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows

@@ -1,17 +1,15 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.product.Product;
 import com.dft.bigcommerce.model.product.ProductRequest;
 import com.dft.bigcommerce.model.product.ProductWrapper;
-
-import com.dft.bigcommerce.model.product.bulkpricingrule.ProductBulkPricingRulesWrapper;
-import com.dft.bigcommerce.model.product.customfields.ProductCustomFieldWrapper;
 import com.dft.bigcommerce.model.product.ProductsWrapper;
 import com.dft.bigcommerce.model.product.bulkpricingrule.ProductBulkPricingRulesWrapper;
+import com.dft.bigcommerce.model.product.customfields.ProductCustomFieldWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,13 +22,13 @@ public class BigcommerceProducts extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceProducts(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceProducts(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     public Product getProductById(Integer productId, HashMap<String, String> params) {
         URI uri = baseUrl(CATALOG_PRODUCTS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
-                  .concat(productId.toString()));
+            .concat(productId.toString()));
         uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);

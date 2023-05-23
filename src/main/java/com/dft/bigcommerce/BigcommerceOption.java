@@ -1,11 +1,11 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.option.OptionRequest;
 import com.dft.bigcommerce.model.option.OptionWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -14,8 +14,8 @@ public class BigcommerceOption extends BigcommerceSDK {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public BigcommerceOption(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceOption(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows

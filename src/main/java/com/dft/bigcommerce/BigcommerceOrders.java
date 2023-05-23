@@ -1,12 +1,12 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.handler.JsonBodyHandler;
+import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
 import com.dft.bigcommerce.model.ordersv2.orders.OrderRequest;
 import com.dft.bigcommerce.model.ordersv2.orders.OrderWrapper;
 import com.dft.bigcommerce.model.ordersv2.orders.OrdersWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -18,14 +18,14 @@ public class BigcommerceOrders extends BigcommerceSDK {
     private static final String ORDERS_ENDPOINT = "/orders";
     private static final String FORWARD_SLASH_CHARACTER = "/";
 
-    public BigcommerceOrders(String storeHash, String accessToken) {
-        super(storeHash, accessToken);
+    public BigcommerceOrders(BigcommerceCredentials credentials) {
+        super(credentials);
     }
 
     @SneakyThrows
     public OrderWrapper getOrderById(Integer orderId) {
         URI uri = baseUrlV2(ORDERS_ENDPOINT.concat(FORWARD_SLASH_CHARACTER)
-                .concat(orderId.toString()));
+            .concat(orderId.toString()));
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<OrderWrapper> handler = new JsonBodyHandler<>(OrderWrapper.class);
