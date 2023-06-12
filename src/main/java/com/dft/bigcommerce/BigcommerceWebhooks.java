@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 
 public class BigcommerceWebhooks extends BigcommerceSDK {
 
@@ -32,8 +33,9 @@ public class BigcommerceWebhooks extends BigcommerceSDK {
     }
 
     @SneakyThrows
-    public WebhooksWrapper getAllWebhooks(){
+    public WebhooksWrapper getAllWebhooks(HashMap<String, String> params){
         URI uri = baseUrl(HOOKS_ENDPOINT);
+        uri = addParameters(uri, params);
 
         HttpRequest request = get(uri);
         HttpResponse.BodyHandler<WebhooksWrapper> handler = new JsonBodyHandler<>(WebhooksWrapper.class);
