@@ -5,6 +5,6 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class OrdersWebhook extends CoreWebhookPayload {
-    private OrderData data;
+public class BigcommerceWebhook extends CoreWebhookPayload {
+    private WebhookData data;
 }
