@@ -116,28 +116,23 @@ public class BigcommerceSDK {
         return new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), builder.toString(), uri.getFragment());
     }
 
-    @SneakyThrows
     protected HttpRequest get(URI uri) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(ACCEPT, "application/json")
-            .GET()
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(ACCEPT, "application/json")
+                          .GET()
+                          .build();
     }
 
-    @SneakyThrows
     protected HttpRequest post(URI uri, final String jsonBody) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
     }
 
-    @SneakyThrows
     protected HttpRequest postWithOutAccessToken(URI uri, final String jsonBody) {
         return HttpRequest.newBuilder(uri)
                           .header(CONTENT_TYPE, "application/json")
@@ -146,36 +141,30 @@ public class BigcommerceSDK {
                           .build();
     }
 
-    @SneakyThrows
     protected HttpRequest put(URI uri, final String jsonBody) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
     }
 
-    @SneakyThrows
     protected HttpRequest delete(URI uri) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .DELETE()
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .DELETE()
+                          .build();
     }
 
     @SneakyThrows
     public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
-
-        return client
-            .sendAsync(request, handler)
-            .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
-            .get()
-            .body();
+        return client.sendAsync(request, handler)
+                     .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
+                     .get()
+                     .body();
     }
 
     @SneakyThrows
