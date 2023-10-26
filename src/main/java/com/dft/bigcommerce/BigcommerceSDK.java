@@ -188,11 +188,7 @@ public class BigcommerceSDK {
     public BigcommerceOrders getOrderApi() {
         return new BigcommerceOrders(credentials);
     }
-
-    public BigcommerceOAuthTokenAPI getBigcommerceOAuthTokenAPI() {
-        return new BigcommerceOAuthTokenAPI();
-    }
-
+    
     public BigcommerceOrderProductsV2 getOrderProductsApi() {
         return new BigcommerceOrderProductsV2(credentials);
     }
