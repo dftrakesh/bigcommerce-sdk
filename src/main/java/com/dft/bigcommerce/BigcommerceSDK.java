@@ -1,6 +1,7 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
@@ -23,7 +24,7 @@ public class BigcommerceSDK {
     int MAX_ATTEMPTS = 50;
     int TIME_OUT_DURATION = 60000;
     private final HttpClient client;
-    private final BigcommerceCredentials credentials;
+    private BigcommerceCredentials credentials;
     private static final String FORWARD_SLASH_CHARACTER = "/";
     private static final String AUTH_TOKEN = "X-Auth-Token";
     private static final String ACCEPT = "Accept";
@@ -32,6 +33,16 @@ public class BigcommerceSDK {
     private static final String VERSION_3 = "/v3";
     private static final String VERSION_2 = "/v2";
     private static final String HTTPS = "https://";
+
+    protected final ObjectMapper objectMapper = new ObjectMapper();
+
+    public BigcommerceSDK() {
+        client = HttpClient.newBuilder()
+                           .followRedirects(HttpClient.Redirect.ALWAYS)
+                           .version(HttpClient.Version.HTTP_1_1)
+                           .connectTimeout(Duration.ofSeconds(20))
+                           .build();
+    }
 
     public BigcommerceSDK(BigcommerceCredentials credentials) {
         this.credentials = credentials;
@@ -105,57 +116,55 @@ public class BigcommerceSDK {
         return new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), builder.toString(), uri.getFragment());
     }
 
-    @SneakyThrows
     protected HttpRequest get(URI uri) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(ACCEPT, "application/json")
-            .GET()
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(ACCEPT, "application/json")
+                          .GET()
+                          .build();
     }
 
-    @SneakyThrows
     protected HttpRequest post(URI uri, final String jsonBody) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
     }
 
-    @SneakyThrows
+    protected HttpRequest postWithOutAccessToken(URI uri, final String jsonBody) {
+        return HttpRequest.newBuilder(uri)
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
+    }
+
     protected HttpRequest put(URI uri, final String jsonBody) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
     }
 
-    @SneakyThrows
     protected HttpRequest delete(URI uri) {
-
         return HttpRequest.newBuilder(uri)
-            .header(AUTH_TOKEN, this.credentials.getAccessToken())
-            .header(CONTENT_TYPE, "application/json")
-            .header(ACCEPT, "application/json")
-            .DELETE()
-            .build();
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .DELETE()
+                          .build();
     }
 
     @SneakyThrows
     public <T> T getRequestWrapped(HttpRequest request, HttpResponse.BodyHandler<T> handler) {
-
-        return client
-            .sendAsync(request, handler)
-            .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
-            .get()
-            .body();
+        return client.sendAsync(request, handler)
+                     .thenComposeAsync(response -> tryResend(client, request, handler, response, 1))
+                     .get()
+                     .body();
     }
 
     @SneakyThrows
@@ -171,8 +180,17 @@ public class BigcommerceSDK {
         return CompletableFuture.completedFuture(resp);
     }
 
+    @SneakyThrows
+    public String toString(Object object) {
+        return objectMapper.writeValueAsString(object);
+    }
+
     public BigcommerceOrders getOrderApi() {
         return new BigcommerceOrders(credentials);
+    }
+
+    public BigcommerceOAuthTokenAPI getBigcommerceOAuthTokenAPI() {
+        return new BigcommerceOAuthTokenAPI();
     }
 
     public BigcommerceOrderProductsV2 getOrderProductsApi() {
