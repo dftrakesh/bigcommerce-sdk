@@ -1,6 +1,7 @@
 package com.dft.bigcommerce;
 
 import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
@@ -23,7 +24,7 @@ public class BigcommerceSDK {
     int MAX_ATTEMPTS = 50;
     int TIME_OUT_DURATION = 60000;
     private final HttpClient client;
-    private final BigcommerceCredentials credentials;
+    private BigcommerceCredentials credentials;
     private static final String FORWARD_SLASH_CHARACTER = "/";
     private static final String AUTH_TOKEN = "X-Auth-Token";
     private static final String ACCEPT = "Accept";
@@ -32,6 +33,16 @@ public class BigcommerceSDK {
     private static final String VERSION_3 = "/v3";
     private static final String VERSION_2 = "/v2";
     private static final String HTTPS = "https://";
+
+    protected final ObjectMapper objectMapper = new ObjectMapper();
+
+    public BigcommerceSDK() {
+        client = HttpClient.newBuilder()
+                           .followRedirects(HttpClient.Redirect.ALWAYS)
+                           .version(HttpClient.Version.HTTP_1_1)
+                           .connectTimeout(Duration.ofSeconds(20))
+                           .build();
+    }
 
     public BigcommerceSDK(BigcommerceCredentials credentials) {
         this.credentials = credentials;
@@ -127,6 +138,15 @@ public class BigcommerceSDK {
     }
 
     @SneakyThrows
+    protected HttpRequest postWithOutAccessToken(URI uri, final String jsonBody) {
+        return HttpRequest.newBuilder(uri)
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
+    }
+
+    @SneakyThrows
     protected HttpRequest put(URI uri, final String jsonBody) {
 
         return HttpRequest.newBuilder(uri)
@@ -171,8 +191,17 @@ public class BigcommerceSDK {
         return CompletableFuture.completedFuture(resp);
     }
 
+    @SneakyThrows
+    public String toString(Object object) {
+        return objectMapper.writeValueAsString(object);
+    }
+
     public BigcommerceOrders getOrderApi() {
         return new BigcommerceOrders(credentials);
+    }
+
+    public BigcommerceOAuthTokenAPI getBigcommerceOAuthTokenAPI() {
+        return new BigcommerceOAuthTokenAPI();
     }
 
     public BigcommerceOrderProductsV2 getOrderProductsApi() {
