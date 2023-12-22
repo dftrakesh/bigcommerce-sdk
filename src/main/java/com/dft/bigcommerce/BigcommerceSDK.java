@@ -89,14 +89,8 @@ public class BigcommerceSDK {
             .toString());
     }
 
-    @SneakyThrows
     protected URI baseUrlV2(String path) {
-        return new URI(new StringBuilder().append(HTTPS)
-            .append(BASE_ENDPOINT)
-            .append(this.credentials.getStoreHash())
-                .append(VERSION_2)
-                .append(path)
-                .toString());
+        return URI.create(HTTPS + BASE_ENDPOINT + this.credentials.getStoreHash() + VERSION_2 + path);
     }
 
     @SneakyThrows
@@ -130,6 +124,15 @@ public class BigcommerceSDK {
                           .header(CONTENT_TYPE, "application/json")
                           .header(ACCEPT, "application/json")
                           .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                          .build();
+    }
+
+    protected HttpRequest postWithObject(URI uri, final Object jsonBody) {
+        return HttpRequest.newBuilder(uri)
+                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(CONTENT_TYPE, "application/json")
+                          .header(ACCEPT, "application/json")
+                          .POST(HttpRequest.BodyPublishers.ofString(toString(jsonBody)))
                           .build();
     }
 
