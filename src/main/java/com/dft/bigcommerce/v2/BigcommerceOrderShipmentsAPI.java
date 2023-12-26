@@ -1,22 +1,22 @@
-package com.dft.bigcommerce;
+package com.dft.bigcommerce.v2;
 
+import com.dft.bigcommerce.BigcommerceSDK;
 import com.dft.bigcommerce.handler.JsonBodyHandler;
 import com.dft.bigcommerce.model.credentials.BigcommerceCredentials;
-import com.dft.bigcommerce.model.ordersv2.ordershipments.OrderShipmentRequest;
-import com.dft.bigcommerce.model.ordersv2.ordershipments.OrderShipmentWrapper;
-import com.dft.bigcommerce.model.ordersv2.ordershipments.OrderShipmentsWrapper;
+import com.dft.bigcommerce.model.v2.ordershipments.OrderShipmentRequest;
+import com.dft.bigcommerce.model.v2.ordershipments.OrderShipmentsWrapper;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class BigcommerceOrderShipmentsV2API extends BigcommerceSDK {
+public class BigcommerceOrderShipmentsAPI extends BigcommerceSDK {
 
     private static final String ORDERS_ENDPOINT = "/orders";
     private static final String FORWARD_SLASH_CHARACTER = "/";
     private static final String SHIPMENTS_ENDPOINT = "/shipments";
     
-    public BigcommerceOrderShipmentsV2API(BigcommerceCredentials credentials) {
+    public BigcommerceOrderShipmentsAPI(BigcommerceCredentials credentials) {
         super(credentials);
     }
     

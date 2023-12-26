@@ -1,4 +1,4 @@
-package com.dft.bigcommerce.model.ordersv2.ordershipments;
+package com.dft.bigcommerce.model.v2.ordershipments;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
