@@ -22,7 +22,6 @@ public class BigcommerceOrderShipmentsV2API extends BigcommerceSDK {
     
     public OrderShipmentsWrapper createOrderShipment(Integer orderId, OrderShipmentRequest orderShipmentRequest) {
         URI uri = baseUrlV2(ORDERS_ENDPOINT + FORWARD_SLASH_CHARACTER + orderId + SHIPMENTS_ENDPOINT);
-        System.out.println("uri = " + uri);
 
         HttpRequest request = postWithObject(uri, orderShipmentRequest);
         HttpResponse.BodyHandler<OrderShipmentsWrapper> handler = new JsonBodyHandler<>(OrderShipmentsWrapper.class);
