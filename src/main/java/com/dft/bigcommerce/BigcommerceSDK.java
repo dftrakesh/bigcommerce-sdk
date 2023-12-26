@@ -129,7 +129,7 @@ public class BigcommerceSDK {
 
     protected HttpRequest postWithObject(URI uri, final Object jsonBody) {
         return HttpRequest.newBuilder(uri)
-                          .header(AUTH_TOKEN, this.credentials.getAccessToken())
+                          .header(AUTH_TOKEN, credentials.getAccessToken())
                           .header(CONTENT_TYPE, "application/json")
                           .header(ACCEPT, "application/json")
                           .POST(HttpRequest.BodyPublishers.ofString(toString(jsonBody)))
